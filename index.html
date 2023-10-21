@@ -12,22 +12,14 @@
     <button onclick="testA()">A</button>
     <button onclick="testB()">B</button>
     <button onclick="testC()">C</button>
-    <button onclick="testD()">D</button>
-    <button onclick="testE()">E</button>
     <button onclick="testP()">P</button>
     <button onclick="testQ()">Q</button>
     <button onclick="testR()">R</button>
-    <button onclick="testT()">T</button>
-    <button onclick="testU()">U</button>
-    <button onclick="testV()">V</button>
-    <br>
-    <button onclick="testW()">W</button>
-    <button onclick="testX()">X</button>
-    <button onclick="testY()">Y</button>
     <script>
         let result1 = document.getElementById("result1");
         let result2 = document.getElementById("result2");
         let time = "";
+        let timestamp = 0;
         let timerId = "";
         let i = 0;
         let mms = 20;
@@ -35,167 +27,71 @@
         let res1 = "";
         let res2 = "";
         let z = "";
+
         function init() {
             mms = parseInt(prompt("mms"));
+            console.log(new Date().getUTCMilliseconds());
         }
 
         function testA() {
             time = Date.now();
-            result1.textContent = res1;
-
-            clearTimeout(timerId);
-            for(let i = 0; i < z.length; i++) {
-
-
-            }
+            repeator();
 
         }
 
         function testB() {
-            result1.textContent = Date.now() - time;
+            bool = false;
+            result1.textContent = res1;
         }
 
         function testC() {
-            i = 0;
             time = Date.now();
-            timerId = setInterval(function() {
-                i += mms;
-            },mms)
-
-        }
-
-        function testD() {
-            clearInterval(timerId);
-            result1.textContent = Date.now() - time;
-            result2.textContent = i;
-        }
-
-        function testE() {
-            i = 0;
-            time = Date.now();
-            timerId = setInterval(function() {
-                let can = document.createElement("canvas");
-                document.body.appendChild(can);
-                i += mms;
-            },mms)
+            repeator();
+            setTimeout(function() {result1.textContent = res1},10000);
         }
 
         function testP() {
-            time = Date.now();
-            testQ();
+            setTimeout(function() {
+                repeator2();
+            },1000 - new Date().getUTCMilliseconds());
+
         }
 
         function testQ() {
-            i += mms;
-            if(bool){setTimeout(testQ,mms)};
+            bool = false;
+            result1.textContent = res1;
         }
 
         function testR() {
-            result1.textContent = Date.now() - time;
-            result2.textContent = i;
+            setTimeout(function() {
+                time = Date.now();
+                repeator2();
+            },1000 - new Date().getUTCMilliseconds());
+            setTimeout(function() {result1.textContent = res1},10000);
         }
 
-        function testT() {
-            i = 0;
-            time = Date.now();
-            timerId = setInterval(function() {
-                i ++;
-                let tmp = (time - Date.now());
-                res1 = res1 + "[" + tmp +"," + i + "]" + ",";
 
-                result1.textContent = res1;
-            },mms)
+        function repeator() {
+
+            res1 = res1 + "[" + (Date.now() - time) + "," + i + "]" +  ",";
+            i ++;
+
+            if(bool){setTimeout(repeator,mms)};
         }
 
         
-        function testU() {
-            i = 0;
-
-            timerId = setInterval(function() {
-                i += mms;
-                res1 = res1 + i + ",";
-                result1.textContent = res1;
-            },mms)
-        }
-        function testV() {
-            i = 0;
-
-            timerId = setInterval(function() {
-                i += mms;
-                res1 = res1 + i + ",";
-            },mms)
-
-            result1.textContent = res1;
-        }
-
-        function animate() {
-            i ++;
-            let tmp = (time - Date.now());
-            res1 = res1 + "[" + tmp +"," + i + "]" + ",";
-            result1.textContent = res1;
-
-            requestAnimationFrame(animate);
-        }
-
-        function testW() {
-            time = Date.now();
-            requestAnimationFrame(animate);
-
-        }
-
-        function testX() {
-            let start, previousTimeStamp;
-            let done = false;
-
-            function step(timestamp) {
-              if (start === undefined) {
-                start = timestamp;
-              }
-              const elapsed = timestamp - start;
-
-              if (previousTimeStamp !== timestamp) {
-                console.log(elapsed);
-              }
-
-              if (elapsed < 2000) {
-                previousTimeStamp = timestamp;
-                window.requestAnimationFrame(step);
-                
-              }
+        function repeator2() {
+            if(time === "") {
+                time = new Date().getTime();
             }
 
-            window.requestAnimationFrame(step);
+            res1 = res1 + "[" + (new Date().getTime() - time) + "," + i + "]" +  ",";
+            i ++;
+
+        //    console.log(delay);
+            setTimeout(repeator2,mms - (new Date().getUTCMilliseconds()) % mms);
+
         }
-
-        function testY() {
-            let x,y,z,w;
-            time = Date.now();
-            timerId = setInterval(() => {
-
-                i ++;
-
-                if(x === undefined && Date.now() - time >= 5000) {
-                    x = i;
-                }
-
-                if(y === undefined && Date.now() - time >= 10000) {
-                    y = i;
-                }
-
-                if(z === undefined && Date.now() - time >= 15000) {
-                    z = i;
-                }
-
-                if(Date.now() - time >= 20000) {
-                    clearInterval(timerId);
-                    w = i;
-                    result1.textContent = `${x},${y},${z},${w}`;
-                }
-
-            },mms)
-            
-        }
-
     </script>
 </body>
 </html>
