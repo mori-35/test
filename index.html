@@ -51,9 +51,11 @@
         }
 
         function testP() {
+            let t = 1000 - new Date().getUTCMilliseconds();
             setTimeout(function() {
+                console.log(t);
                 repeator2();
-            },1000 - new Date().getUTCMilliseconds());
+            },t);
 
         }
 
