@@ -6,6 +6,7 @@
     <title>テスト</title>
 </head>
 <body>
+    <div id="container"></div>
     <div id="res">結果：</div>
 
 </body>
@@ -18,6 +19,13 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+
+    #res {
+        position: absolute;
+        top:0px;
+        left:0px;
+        z-index:100;
     }
 </style>
 
@@ -55,8 +63,9 @@
 
         init() {
             let can;
+            let con = document.getElementById("container");
 
-            can = myfunc.createCanvas(50,50,false,0,0,-1);
+            can = myfunc.createCanvas(80,80,false,0,0,0);
             can.style.backgroundColor = "beige";
             can.addEventListener("touchend",(e) => {
                 this.cursedPreventDefault();
@@ -65,14 +74,14 @@
                 document.getElementById("res").textContent = width + "," + height;
                 setTimeout(() => {window.scrollTo(0,1)},100);
             });
-            document.body.appendChild(can);
+            con.appendChild(can);
 
-            can = myfunc.createCanvas(50,50,false,750,0,0);
+            can = myfunc.createCanvas(80,80,false,750,0,0);
             can.style.backgroundColor = "grey";
             can.addEventListener("touchend",(e) => {
                 window.location.reload();
             });
-            document.body.appendChild(can);
+            con.appendChild(can);
         }
 
 
