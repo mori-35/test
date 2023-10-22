@@ -13,19 +13,46 @@
 <style>
     html,body {
         overflow: hidden;
+        touch-action: pan-x pan-y;
     }
 </style>
 
 <script>
+    class Myfunction {
+        createDiv(x,y,z) {
+            let div = document.createElement("div");
+            div.style.position = "absolute";
+            div.style.left = `${x}px`;
+            div.style.top = `${y}px`;
+            div.style.zIndex = z;
+            div.width = 0;
+            div.height = 0;
+            return div;
+        }
+
+        createCanvas(w,h,isCenter,left,top,zIndex) {
+            let canvas = document.createElement("canvas");
+            canvas.width = w;
+            canvas.height = h;
+            canvas.style.position = "absolute";
+            canvas.style.left = left + "px";
+            canvas.style.top = top + "px";
+            canvas.style.zIndex = zIndex;
+            let ctx = canvas.getContext("2d");
+            if(isCenter) {ctx.translate(w/2,h/2)};
+            return canvas;
+        }
+    }
+
     class TestClass {
         constructor() {
             (() => {this.init()})()
         }
 
         init() {
-            let can = document.createElement("canvas");
-            can.width = 100;
-            can.height = 100;
+            let can;
+
+            can = myfunc.createCanvas(50,50,false,0,0,-1);
             can.style.backgroundColor = "beige";
             can.addEventListener("touchend",(e) => {
                 this.cursedPreventDefault();
@@ -36,21 +63,21 @@
             });
             document.body.appendChild(can);
 
-
-            console.log("!");
+            can = myfunc.createCanvas(50,50,false,750,0,0);
+            can.style.backgroundColor = "grey";
+            can.addEventListener("touchend",(e) => {
+                window.location.reload();
+            });
+            document.body.appendChild(can);
         }
 
 
         cursedPreventDefault(e) {
-            window.addEventListener("touchstart",(e) => {e.preventDefault()});
-            window.addEventListener("touchend",(e) => {e.preventDefault()});
-            window.addEventListener("touchmove",(e) => {e.preventDefault()});
-            window.addEventListener("touchcancel",(e) => {e.preventDefault()});
             window.addEventListener("beforeunload",(e) => {e.returnValue = "really?"});
-            console.log("?");
         }
     }
 
+    let myfunc = new Myfunction();
     let test = new TestClass();
 
 </script>
