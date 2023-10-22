@@ -2,98 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>テスト</title>
 </head>
-<body onload = "init()">
-    <p id="result1"></p>
-    <p id="result2"></p>
-    <button onclick="testA()">A</button>
-    <button onclick="testB()">B</button>
-    <button onclick="testC()">C</button>
-    <button onclick="testP()">P</button>
-    <button onclick="testQ()">Q</button>
-    <button onclick="testR()">R</button>
-    <script>
-        let result1 = document.getElementById("result1");
-        let result2 = document.getElementById("result2");
-        let time = "";
-        let timestamp = 0;
-        let timerId = "";
-        let i = 0;
-        let mms = 20;
-        let bool = true;
-        let res1 = "";
-        let res2 = "";
-        let z = "";
+<body>
+    <div id="res">結果：</div>
 
-        function init() {
-            mms = parseInt(prompt("mms"));
-            console.log(new Date().getUTCMilliseconds());
-        }
-
-        function testA() {
-            time = Date.now();
-            repeator();
-
-        }
-
-        function testB() {
-            bool = false;
-            result1.textContent = res1;
-        }
-
-        function testC() {
-            time = Date.now();
-            repeator();
-            setTimeout(function() {result1.textContent = res1},10000);
-        }
-
-        function testP() {
-            let t = 1000 - new Date().getUTCMilliseconds();
-            setTimeout(function() {
-                console.log(t);
-                repeator2();
-            },t);
-
-        }
-
-        function testQ() {
-            bool = false;
-            result1.textContent = res1;
-        }
-
-        function testR() {
-            setTimeout(function() {
-                time = Date.now();
-                repeator2();
-            },1000 - new Date().getUTCMilliseconds());
-            setTimeout(function() {result1.textContent = res1},10000);
-        }
-
-
-        function repeator() {
-
-            res1 = res1 + "[" + (Date.now() - time) + "," + i + "]" +  ",";
-            i ++;
-
-            if(bool){setTimeout(repeator,mms)};
-        }
-
-        
-        function repeator2() {
-            if(time === "") {
-                time = new Date().getTime();
-            }
-
-            res1 = res1 + "[" + (new Date().getTime() - time) + "," + i + "]" +  ",";
-            i ++;
-
-        //    console.log(delay);
-            setTimeout(repeator2,mms - (new Date().getUTCMilliseconds()) % mms);
-
-        }
-    </script>
 </body>
+
+<style>
+
+</style>
+
+<script>
+    class TestClass {
+        constructor() {
+            (() => {this.init()})()
+        }
+
+        init() {
+            let can = document.createElement("canvas");
+            can.width = 100;
+            can.height = 100;
+            can.style.backgroundColor = "beige";
+            can.addEventListener("touchend",(e) => {
+                this.cursedPreventDefault();
+                let width = window.innerWidth;
+                let height = window.innerHeight;
+                document.getElementById("res").textContent = width + "," + height;
+            });
+            document.body.appendChild(can);
+
+
+            console.log("!");
+        }
+
+
+        cursedPreventDefault(e) {
+            window.ontouchstart = ((e) => {e.preventDefault()});
+            window.ontouchend = ((e) => {e.preventDefault()});
+            window.ontouchmove = ((e) => {e.preventDefault()});
+            window.ontouchcancel = ((e) => {e.preventDefault()});
+
+            window.addEventListener("beforeunload",(e) => {e.returnValue = "really?"});
+            console.log("?");
+        }
+    }
+
+    let test = new TestClass();
+
+</script>
 </html>
