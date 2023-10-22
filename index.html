@@ -30,6 +30,7 @@
                 let width = window.innerWidth;
                 let height = window.innerHeight;
                 document.getElementById("res").textContent = width + "," + height;
+                setTimeout(() => {window.scrollTo(0,1)},100);
             });
             document.body.appendChild(can);
 
@@ -39,11 +40,10 @@
 
 
         cursedPreventDefault(e) {
-            window.ontouchstart = ((e) => {e.preventDefault()});
-            window.ontouchend = ((e) => {e.preventDefault()});
-            window.ontouchmove = ((e) => {e.preventDefault()});
-            window.ontouchcancel = ((e) => {e.preventDefault()});
-
+            window.addEventListener("touchstart",(e) => {e.preventDefault()});
+            window.addEventListener("touchend",(e) => {e.preventDefault()});
+            window.addEventListener("touchmove",(e) => {e.preventDefault()});
+            window.addEventListener("touchcancel",(e) => {e.preventDefault()});
             window.addEventListener("beforeunload",(e) => {e.returnValue = "really?"});
             console.log("?");
         }
